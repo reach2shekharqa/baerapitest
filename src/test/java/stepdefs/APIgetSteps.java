@@ -37,8 +37,10 @@ public class APIgetSteps {
         Response r = (Response) testContext.get("response");
 
         r.prettyPrint();
-
         r.then().statusCode(Integer.valueOf(statusCode));
+
+        String name = r.jsonPath().get("name");
+        System.out.println(name);
 
     }
 

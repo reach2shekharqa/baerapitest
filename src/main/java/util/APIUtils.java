@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
 
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 public class APIUtils {
@@ -31,16 +32,15 @@ public class APIUtils {
 
     public Response buildRequestForPost(String endpoint, String filepath) throws IOException {
 
-        System.out.println(cm.get("base.url"));
+        //System.out.println(cm.get("base.url"));
         String finalfilepath = System.getProperty("user.dir") + "/src/main/java/resources/requestBody/" + filepath + ".json";
-        System.out.println(finalfilepath);
+        //System.out.println(finalfilepath);
 
         return given()
 
                 .baseUri(cm.get("base.url"))
+                .contentType(ContentType.JSON)
                 .header("x-api-key", cm.get("x-api-key"))
-                .log()
-                .all()
                 .body(RandomUtils.readJsonAndgetAsString(finalfilepath))
                 .post(endpoint);
     }
