@@ -20,6 +20,10 @@ import org.junit.platform.suite.api.*;
 @ConfigurationParameter(key = "cucumber.glue", value = "stepdefs")
 @ConfigurationParameter(key = "cucumber.plugin", value = "pretty, html:target/cucumber-report.html")
 // @ConfigurationParameter(key = "cucumber.plugin", value = "pretty,timeline:target/timeline-report")
+// @ConfigurationParameter(
+//     key = "cucumber.filter.tags", 
+//     value = "${cucumber.filter.tags}" // Will be overridden at runtime
+// )
 
 public class TestRunner {
 

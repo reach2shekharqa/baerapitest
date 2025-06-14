@@ -28,13 +28,13 @@ public class APIgetSteps {
 
         Response response = apiUtils.buildRequestForGet(endpoint);
 
-        testContext.set("responseGet", response);
+        testContext.set("response", response);
 
     }
 
     @Then("the response status code should be {string}")
     public void the_response_status_code_should_be(String statusCode) {
-        Response r = (Response) testContext.get("responseGet");
+        Response r = (Response) testContext.get("response");
 
         r.prettyPrint();
 

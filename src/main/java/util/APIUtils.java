@@ -2,6 +2,8 @@ package util;
 
 import static io.restassured.RestAssured.given;
 
+import java.io.IOException;
+
 import io.restassured.response.Response;
 
 public class APIUtils {
@@ -25,6 +27,22 @@ public class APIUtils {
                 .log()
                 .all()
                 .get(endpoint);
+    }
+
+    public Response buildRequestForPost(String endpoint, String filepath) throws IOException {
+
+        System.out.println(cm.get("base.url"));
+        String finalfilepath = System.getProperty("user.dir") + "/src/main/java/resources/requestBody/" + filepath + ".json";
+        System.out.println(finalfilepath);
+
+        return given()
+
+                .baseUri(cm.get("base.url"))
+                .header("x-api-key", cm.get("x-api-key"))
+                .log()
+                .all()
+                .body(RandomUtils.readJsonAndgetAsString(finalfilepath))
+                .post(endpoint);
     }
 
 }
