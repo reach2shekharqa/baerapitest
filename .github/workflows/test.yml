@@ -26,3 +26,11 @@ jobs:
 
     - name: Run Tests with Maven
       run: mvn clean test
+
+    - name: Upload Cucumber Report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: cucumber-report
+        path: target/cucumber-reports/
+
