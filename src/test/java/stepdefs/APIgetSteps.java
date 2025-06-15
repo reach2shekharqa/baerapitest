@@ -1,5 +1,7 @@
 package stepdefs;
 
+import static io.restassured.RestAssured.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +9,8 @@ import context.TestContext;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.github.cdimascio.dotenv.Dotenv;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import util.APIUtils;
 
@@ -19,6 +23,32 @@ public class APIgetSteps {
 
         this.apiUtils = apiUtils;
         this.testContext = testcontext;
+
+    }
+
+    Dotenv dotenv = Dotenv.configure()
+            .ignoreIfMissing() // Don't crash if .env file is absent
+            .load();
+
+    @Given("I make a GET call to have basic auth test")
+    public void i_make_a_get_call_to_have_basic_auth_test() {
+        String username = System.getenv("API_USERNAME") != null
+                ? System.getenv("API_USERNAME")
+                : dotenv.get("API_USERNAME");
+
+        String password = System.getenv("API_PASSWORD") != null
+                ? System.getenv("API_PASSWORD")
+                : dotenv.get("API_PASSWORD");
+
+        Response r = given()
+                .auth()
+                .basic(username, password)
+                .contentType(ContentType.ANY)
+                // .header("Authorization", "cG9zdG1hbjpwYXNzd29yZA==")
+                .log().body()
+                .get("https://postman-echo.com/basic_auth");
+
+        r.prettyPrint();
 
     }
 
